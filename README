@@ -1,0 +1,14 @@
+This script emulates tail -F (follows log files that have been moved, then 
+created again, a la logrotate), as an example of how to use pyinotify.
+
+Note the strangeness in that you can't watch an individual file with
+IN_MOVED_SELF -- pyinotify will error with "file moved and we can't
+track it, and therefore can't trust it.. track the directotory instead."
+
+Therefore, we track the directory and parse the IN_MODIFY path to verify
+the event relates to our specific file.
+
+USAGE:
+(pip install pyinotify)
+./tail-F_inotify.py /path/to/file [--debug]
+
