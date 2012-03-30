@@ -36,8 +36,9 @@ class PTmp(pyinotify.ProcessEvent):
         else:
     	    print fh.readline().rstrip()
     
-    def process_IN_DELETE(self, event):
-        return
+    def process_IN_MOVE_SELF(self, event):
+        if options.debug:
+            print "The file moved! Continuing to read from that, until a new one is created.."
 
     def process_IN_CREATE(self, event):
         if myfile in os.path.join(event.path, event.name):
@@ -45,7 +46,7 @@ class PTmp(pyinotify.ProcessEvent):
             global fh
             fh.close
             fh = open(myfile, 'r')
-            # catch up:
+            # catch up, in case lines were written during the time we were re-opening:
             if options.debug:
                 print "My file was created! I'm now catching up with lines in the newly created file." 
             for line in fh.readlines():
