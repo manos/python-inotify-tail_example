@@ -1,3 +1,6 @@
+NOTE: see https://github.com/manos/varnish-statsd-graphite-logger for a more evolved example
+of the inotify stuff. (TODO: update this to fully emulate GNU tail)
+
 This script emulates tail -F (follows log files that have been moved, then 
 created again, a la logrotate), as an example of how to use pyinotify.
 
